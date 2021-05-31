@@ -1,39 +1,43 @@
 // Add your code here
+const body = document.querySelector('body');
+console.log(body);
 function submitData(name, email){
 
     const formData = {
-    userName: name,
-    userEmail: email
+    name: name,
+    email: email
+  };
+
+  const configObj = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify(formData)
   };
 
   // const configObj = {
-  //   method: "POST",
+  //   method: 'POST',
   //   headers: {
-  //     "Content-Type": "application/json",
-  //     "Accept": "application/json"
+  //     'Content-Type': 'application/json',
+  //     'Accept': 'application/json'
   //   },
   //   body: JSON.stringify(formData)
-  // };
-
-  const configObj = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: JSON.stringify(formData)
-  }
-  return `${fetch('http://localhost:3000/users', configObj)
+  // }
+  return fetch('http://localhost:3000/users', configObj)
           .then(function(response) {
             return response.json();
           })
           .then(function(object) {
-            console.log(object.id);
+            body.insertAdjacentHTML('afterbegin', `<div id="two">${object.id}</div>`);
+            // console.log(object.id);
           })
           .catch((error)=>{
             alert("Bad things! fetch failed!");
-              console.log(error.message);
-          })}`;
+            body.insertAdjacentHTML('afterbegin', `<div id="two">${error.message}</div>`);
+              // console.log(error.message);
+          });
 
 
 }
